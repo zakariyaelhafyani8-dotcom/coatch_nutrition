@@ -1,6 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:coach_nutrition/MyWorkout/MyPlan.dart';
+import 'package:provider/provider.dart';
+import 'package:coach_nutrition/Workout/MyPlanWorkout.dart';
 
 class ChestPage extends StatefulWidget {
   @override
@@ -8,215 +10,168 @@ class ChestPage extends StatefulWidget {
 }
 
 class _ChestPageState extends State<ChestPage> {
-  int currentIndex = 0;
-  final List<Map<String, dynamic>> foods = [
+  final List<Map<String, dynamic>> Exercices = [
     {
       "name": "Bench Press",
       "image": "assets/images/Barbell-Bench-Press.gif",
-      "description":
-          "The bench press is a compound strength training exercise that primarily targets the chest muscles (pectoralis major and minor). It can be performed using various grips and angles to target different areas of the chest, with variations such as the incline, decline, or flat bench. This exercise is fundamental in bodybuilding, powerlifting, and general fitness training."
-          "Overall, the bench press effectively targets multiple muscle groups in the upper body and is a valuable addition to any strength training routine",
+      "description": "The bench press is a compound exercise that targets the chest, shoulders, and triceps."
     },
     {
       "name": "Incline Chest Fly Machine",
       "image": "assets/images/Incline-Chest-Fly-Machine.gif",
-      "description":
-          "The incline chest fly machine is a machine-based resistance training exercise designed to isolate the upper pectoral muscles. It typically consists of a bench or seat set at an inclined angle (usually around 30 to 45 degrees) and handles or levers connected to a weight stack or resistance system."
-          "The incline position places more emphasis on the clavicular (upper) fibers of the pectoralis major, helping to develop and strengthen that area of the chest. It’s often used in strength training to isolate the chest muscles and promote muscle growth and definition in the upper chest region.",
+      "description": "Isolates the upper chest using controlled fly movements on a machine."
     },
     {
       "name": "Pec Deck Fly",
       "image": "assets/images/Pec-Deck-Fly.gif",
-      "description":
-          "The pec deck fly is a machine-based isolation exercise that primarily targets the chest muscles. It is performed on a special machine that provides a controlled and stable movement that reduces the risk of injury compared to other chest exercises that require free weights. The machine acts as a stabilizer here, emphasizing the pectoralis major and pectoralis minor muscles in the chest. This isolation exercise, which combines pushing and compression movements, helps develop and strengthen the chest muscles",
+      "description": "Machine isolation that targets the pectoralis major and minor with stable movement."
     },
     {
       "name": "High Cable Crossover",
       "image": "assets/images/High-Cable-Crossover.gif",
-      "description":
-          "High cable crossover is a cable exercise that targets the chest muscles. It involves using a cable machine with the pulleys set to the highest position and crossing the arms in front of the body at the end of the movement. This move targets the pecs, specifically the lower, inner and outer areas, while also working the shoulders and triceps as secondary muscles.",
+      "description": "Cable exercise emphasizing inner and lower chest, plus secondary shoulder activation."
     },
     {
       "name": "Incline Dumbbell Press",
       "image": "assets/images/Incline-Dumbbell-Press.gif",
-      "description":
-          "The incline dumbbell press is a strength training exercise that targets the chest (upper pectoral) muscles, as well as the shoulders and triceps. It is performed on an incline bench set at a 30-45 degree angle, with a dumbbell in each hand.",
+      "description": "Strengthens upper chest, front shoulders, and triceps on an incline bench."
     },
     {
       "name": "Decline Dumbbell Press",
       "image": "assets/images/Decline-Dumbbell-Press.gif",
-      "description":
-          "The Decline Dumbbell Press is a variation of the traditional bench press where the bench is set at a declined angle (usually between 15-30 degrees downward), and dumbbells are used instead of a barbell. This exercise specifically targets the lower portion of the pectoralis major (lower chest) while also engaging the triceps and anterior deltoids (front shoulder muscles)",
+      "description": "Targets the lower chest using dumbbells on a decline bench."
     },
     {
       "name": "Chest Dips",
       "image": "assets/images/Chest-Dips.gif",
-      "description":
-          "Chest Dips are a bodyweight exercise that primarily targets the lower chest and triceps, while also engaging the shoulders and core for stabilization. This exercise is performed using parallel bars and is highly effective for building upper body strength and muscle definition, especially in the chest and triceps.",
+      "description": "Bodyweight exercise for lower chest, triceps, and shoulders."
     },
   ];
 
   @override
   Widget build(BuildContext context) {
+    final myPlanProvider = Provider.of<MyPlanProvider>(context);
+    List<Map<String, dynamic>> myPlan = [];
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.orangeAccent,
+        icon: Icon(Icons.list),
+        label: Text("My Plan"),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MyPlanWorkout(),
             ),
-            boxShadow: [
-              BoxShadow(color: Colors.black, blurRadius: 10, spreadRadius: 1),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25),
-              bottomRight: Radius.circular(25),
-            ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-              child: AppBar(
-                elevation: 0,
-                title: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Text(
-                    "Chest",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                centerTitle: true,
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.grey, Colors.black12],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+          );
+        },
       ),
-      body: Container(
-        child: GridView.builder(
-          padding: EdgeInsets.all(20),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1, // 2 items per row
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 16,
-            childAspectRatio: 4,
-          ),
 
-          itemCount: foods.length,
+      appBar: AppBar(
+        title: Text("Chest Workouts",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+        centerTitle: true,
+        backgroundColor: Color(0xFF050B38),
+      ),
+
+      body: Container(
+        color: Color(0xFF050B38),
+        child: ListView.builder(
+          padding: EdgeInsets.all(16),
+          itemCount: Exercices.length,
           itemBuilder: (context, index) {
-            final item = foods[index];
+            final item = Exercices[index];
 
             return Container(
+              margin: EdgeInsets.only(bottom: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [BoxShadow(color: Colors.black54, blurRadius: 10)],
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 6, spreadRadius: 1)],
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Image.asset(item["image"], height: 80, width: 80),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        item["name"],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                          fontSize: 15,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        "4 Sets * 8reps",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
+                  ClipRRect(
+                    borderRadius: BorderRadius.horizontal(left: Radius.circular(14)),
+                    child: Image.asset(item["image"], width: 100, height: 100, fit: BoxFit.cover),
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(item["name"], style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 6),
+                        Text("4 Sets • 8 Reps", style: TextStyle(color: Colors.grey[600])),
+                        SizedBox(height: 10),
+                        SizedBox(width: 10),
+
+
+                      ],
+                    ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) {
-                                  return DraggableScrollableSheet(
-                                    expand: false,
-                                    builder: (context, controller) {
-                                      return Container(
-                                        padding: EdgeInsets.all(20),
-                                        child: ListView(
-                                          controller: controller,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  item["name"],
-                                                  style: TextStyle(
-                                                    fontSize: 22,
-                                                  ),
-                                                ),
-                                                IconButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
-                                                  icon: Icon(Icons.close),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 20),
-                                            Image.asset(
-                                              item["image"],
-                                            ),
-                                            Text(
-                                              'Overview',
-                                              style: TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Text(
-                                              item["description"],
-                                              style: TextStyle(fontSize: 16),
-                                            ),
-                                          ],
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.orangeAccent),
+                      icon: Icon(Icons.info, color: Colors.white),
+                      label: Text("Info", style: TextStyle(color: Colors.white)),
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.white,
+                          builder: (_) => DraggableScrollableSheet(
+                            expand: false,
+                            builder: (_, controller) => Padding(
+                              padding: EdgeInsets.all(20),
+                              child: ListView(
+                                controller: controller,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(item["name"], style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                                      IconButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        icon: Icon(Icons.close),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 20),
+                                  Image.asset(item["image"], height: 200),
+                                  SizedBox(height: 20),
+                                  Text("Overview", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                                  SizedBox(height: 10),
+                                  Text(item["description"], style: TextStyle(fontSize: 16)),
+                                  SizedBox(height: 20),
+                                  ElevatedButton.icon(
+                                    icon: Icon(Icons.add),
+                                    label: Text("Add to My Plan"),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.orangeAccent,
+                                      foregroundColor: Colors.white,
+                                      padding: EdgeInsets.symmetric(vertical: 14),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                    ),
+                                    onPressed: () {
+                                      myPlanProvider.addExercise(item);
+                                      myPlan.add(item);
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text("${item["name"]} added to My Plan"),
+                                          duration: Duration(seconds: 2),
                                         ),
                                       );
                                     },
-                                  );
-                                },
-                              );
-                            });
-                          },
-                          icon: Icon(Icons.open_in_new_sharp),
-                        ),
-                      ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+
                     ),
                   ),
                 ],
@@ -228,3 +183,4 @@ class _ChestPageState extends State<ChestPage> {
     );
   }
 }
+

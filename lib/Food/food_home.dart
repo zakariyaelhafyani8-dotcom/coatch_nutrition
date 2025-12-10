@@ -243,7 +243,7 @@ class _foodGuidPageState extends State<foodGuidPage> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white70,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [BoxShadow(color: Colors.black54, blurRadius: 10)],
               ),
@@ -391,7 +391,6 @@ class _foodGuidPageState extends State<foodGuidPage> {
     );
   }
 }
-
 class ChartData {
   final String label;
   final double value;

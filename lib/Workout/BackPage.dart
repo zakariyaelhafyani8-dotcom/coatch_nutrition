@@ -1,124 +1,86 @@
 import 'dart:ui';
-
+import 'package:coach_nutrition/Workout/MyPlanWorkout.dart';
 import 'package:flutter/material.dart';
+import 'package:coach_nutrition/MyWorkout/MyPlan.dart';
+import 'package:provider/provider.dart';
 
-class BackPage extends StatefulWidget {
-  @override
-  State<BackPage> createState() => _BackPageState();
-}
-
-class _BackPageState extends State<BackPage> {
-  int currentIndex = 0;
+class BackPage extends StatelessWidget {
   final List<Map<String, dynamic>> foods = [
     {
       "name": "Pull-Up",
       "image": "assets/images/Pull-up.gif",
       "description":
-          "The pull-up is a foundational bodyweight compound exercise that targets the back, arms, and core. It’s widely used in strength training, military fitness tests, calisthenics, and sports performance programs due to its ability to build upper body pulling power and muscular endurance with minimal equipment. It requires coordination between the lats, biceps, rhomboids, and core, making it one of the most effective exercises for developing upper body strength using your own bodyweight.",
+      "The pull-up is a foundational bodyweight compound exercise that targets the back, arms, and core.",
     },
     {
       "name": "Lat Pulldown",
       "image": "assets/images/Lat-Pulldown.gif",
       "description":
-          "The lat pulldown is a pulling exercise that primarily targets the latissimus dorsi muscles (commonly known as “lats”) in your back. It involves pulling a cable bar or handle down towards your chest while seated on a machine specifically designed for this exercise. The lat pulldown is typically performed with a wide grip, but can also be done with a narrow grip or underhand grip to target different muscle groups in the back and arms. It is a popular exercise for building upper body strength and improving posture.",
+      "The lat pulldown is a pulling exercise that targets the latissimus dorsi muscles.",
     },
     {
       "name": "Barbell Bent Over Row",
       "image": "assets/images/Barbell-Bent-Over-Row.gif",
       "description":
-          "The Barbell Bent Over Row is a compound weightlifting exercise that primarily targets the muscles of the upper back, including the lats (latissimus dorsi), rhomboids, and traps, as well as the biceps and rear deltoids. It also engages the core muscles for stability. This exercise is commonly used to build strength and muscle mass in the back and arms.",
+      "A compound exercise targeting the upper back, lats, traps, and biceps.",
     },
     {
       "name": "Seated Cable Row",
       "image": "assets/images/Seated-Cable-Row.gif",
       "description":
-          "The seated cable row is a popular cable exercise that targets the upper back and lats. This exercise involves pulling a cable attachment towards your body while seated, using a cable machine. Whether you’re a beginner or an experienced lifter, this exercise can be a valuable addition to your training program.",
+      "A cable exercise that targets the upper back and lats.",
     },
     {
       "name": "Lever T-Bar Row",
       "image": "assets/images/Lever-T-bar-Row.gif",
       "description":
-          "T-bar row are a strength training exercise that mimics the movement of rowing a boat. The goal is to strengthen the muscles that bring the arms toward the body, as well as those that move the shoulder blades toward the spine. The t-bar row can allow you to lift more weight. Due to the nature of this movement, you are able to leverage more weight."
-          "The T bar, which targets the entire back chain, targets the latissimus dorsi, infraspinatus, trapezius, posterior deltoids and rhomboids, so adding exercises such as barbell rows and t-bar rows to your training programs will be beneficial for the development of back muscles.",
+      "A rowing movement that targets the entire back chain for strength.",
     },
     {
       "name": "Dumbbell Row",
       "image": "assets/images/Dumbbell-Row.gif",
       "description":
-          "The dumbbell row is a fundamental strength training movement that builds back thickness, improves posture, and enhances upper body pulling strength. This unilateral exercise allows for greater range of motion and muscle activation while correcting strength imbalances",
+      "A unilateral movement that enhances back thickness and posture.",
     },
     {
       "name": "Seated Row Machine",
       "image": "assets/images/Seated-Row-Machine.gif",
       "description":
-          "The seated row machine is a pulling exercise that works the back muscles in general, particularly the latissimus dorsi. Suitable for beginners, this exercise can be used as part of upper body strength training.",
+      "A beginner-friendly back exercise using the row machine.",
     },
   ];
 
   @override
   Widget build(BuildContext context) {
+    final myPlanProvider = Provider.of<MyPlanProvider>(context);
+
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
-            ),
-            boxShadow: [
-              BoxShadow(color: Colors.black, blurRadius: 10, spreadRadius: 1),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25),
-              bottomRight: Radius.circular(25),
-            ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-              child: AppBar(
-                elevation: 0,
-                title: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Text(
-                    "Back",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                centerTitle: true,
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.grey, Colors.black12],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.orangeAccent,
+        icon: Icon(Icons.list),
+        label: Text("My Plan"),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => MyPlanWorkout()),
+          );
+        },
+      ),
+      appBar: AppBar(
+        title: Text("Back Exercises",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+        centerTitle: true,
+        backgroundColor: Color(0xFF050B38),
       ),
       body: Container(
+        color: Color(0xFF050B38),
         child: GridView.builder(
           padding: EdgeInsets.all(20),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1, // 2 items per row
+            crossAxisCount: 1,
             mainAxisSpacing: 16,
             crossAxisSpacing: 16,
             childAspectRatio: 4,
           ),
-
           itemCount: foods.length,
           itemBuilder: (context, index) {
             final item = foods[index];
@@ -144,77 +106,97 @@ class _BackPageState extends State<BackPage> {
                           fontSize: 15,
                         ),
                       ),
-                      SizedBox(width: 10),
-                      Text(
-                        "4 Sets * 8reps",
-                        style: TextStyle(color: Colors.grey),
-                      ),
+                      SizedBox(height: 10),
+                      Text("4 Sets × 8 Reps", style: TextStyle(color: Colors.grey)),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) {
-                                  return DraggableScrollableSheet(
-                                    expand: false,
-                                    builder: (context, controller) {
-                                      return Container(
-                                        padding: EdgeInsets.all(20),
-                                        child: ListView(
-                                          controller: controller,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Open bottom sheet
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) {
+                              return DraggableScrollableSheet(
+                                expand: false,
+                                builder: (context, controller) {
+                                  return Container(
+                                    padding: EdgeInsets.all(20),
+                                    child: ListView(
+                                      controller: controller,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  item["name"],
-                                                  style: TextStyle(
-                                                    fontSize: 22,
-                                                  ),
-                                                ),
-                                                IconButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
-                                                  icon: Icon(Icons.close),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 20),
-                                            Image.asset(item["image"]),
                                             Text(
-                                              'Overview',
-                                              style: TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                              item["name"],
+                                              style: TextStyle(fontSize: 22),
                                             ),
-                                            Text(
-                                              item["description"],
-                                              style: TextStyle(fontSize: 16),
+                                            IconButton(
+                                              onPressed: () => Navigator.pop(context),
+                                              icon: Icon(Icons.close),
                                             ),
                                           ],
                                         ),
-                                      );
-                                    },
+                                        SizedBox(height: 20),
+                                        Image.asset(item["image"]),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          "Overview",
+                                          style: TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          item["description"],
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        SizedBox(height: 20),
+                                        ElevatedButton.icon(
+                                          icon: Icon(Icons.add),
+                                          label: Text("Add to My Plan"),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.orangeAccent,
+                                            foregroundColor: Colors.white,
+                                            padding: EdgeInsets.symmetric(vertical: 14),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10)),
+                                          ),
+                                          onPressed: () {
+                                            myPlanProvider.addExercise(item);
+                                            Navigator.pop(context);
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content:
+                                                Text("${item["name"]} added to My Plan"),
+                                                duration: Duration(seconds: 2),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
                               );
-                            });
-                          },
-                          icon: Icon(Icons.open_in_new_sharp),
+                            },
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orangeAccent,
                         ),
-                      ],
-                    ),
+                        icon: Icon(Icons.info, color: Colors.white, size: 18),
+                        label: Text(
+                          "Info",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

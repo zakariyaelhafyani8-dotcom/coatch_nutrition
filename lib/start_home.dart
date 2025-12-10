@@ -1,8 +1,9 @@
+import 'package:coach_nutrition/MyWorkout/MyPlanPage.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:coach_nutrition/Workout/workoutHome.dart';
 import 'package:coach_nutrition/Food/food_home.dart';
-import 'package:coach_nutrition/bodyTest.dart';
+import 'package:coach_nutrition/Profile/ProfilePages.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> pages = [
     Home(key: ValueKey(1)),
-    BodyTestPage(key: ValueKey(2)),
+    MyPlanPage(key: ValueKey(2)),
     workoutHome(key: ValueKey(3)),
     foodGuidPage(key: ValueKey(4)),
   ];
@@ -52,13 +53,30 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.white.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: Text(
-                    "HEALTH CHECK",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "HEALTH CHECK",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 50,
+                      ),
+                      IconButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ProfilePage()),
+                            );
+                          },
+                          icon: Icon(Icons.person, color: Colors.white,),
+                      ),
+                    ],
                   ),
                 ),
                 centerTitle: true,
@@ -67,13 +85,13 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      backgroundColor: Color(0xFF050B38), // Green background
+      backgroundColor: Color(0xFF050B38),
       body: AnimatedSwitcher(
         duration: Duration(milliseconds: 300),
         transitionBuilder: (child, animation) {
           return SlideTransition(
             position: Tween(
-              begin: Offset(1.0, 0.0), // from right
+              begin: Offset(1.0, 0.0),
               end: Offset.zero,
             ).animate(animation),
             child: child,
@@ -100,9 +118,9 @@ class _HomePageState extends State<HomePage> {
             currentIndex: currentIndex,
             type: BottomNavigationBarType.fixed,
             backgroundColor: Color(0xFF050B38),
-            // uses container gradient
+
             elevation: 0,
-            selectedItemColor: Colors.orange,
+            selectedItemColor: Colors.orangeAccent,
             unselectedItemColor: Colors.white38,
             selectedFontSize: 16,
             onTap: (index) {
@@ -113,8 +131,8 @@ class _HomePageState extends State<HomePage> {
             items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
               BottomNavigationBarItem(
-                icon: Icon(Icons.monitor_heart),
-                label: "Body Test",
+                icon: Icon(Icons.sticky_note_2_outlined),
+                label: "My Plan",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.fitness_center),
@@ -211,8 +229,6 @@ class _HomeState extends State<Home> {
               ),
 
               const SizedBox(height: 10),
-
-              // --- DOT INDICATOR ---
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(images.length, (index) {
@@ -230,22 +246,20 @@ class _HomeState extends State<Home> {
                   );
                 }),
               ),
-
-              const SizedBox(height: 10),
-
+              const SizedBox(height: 30),
               Text(
                 "Training • Food • Health Test",
                 style: TextStyle(color: Colors.white, fontSize: 18),
                 textAlign: TextAlign.center,
               ),
-
-              const SizedBox(height: 20),
-
-              // Buttons container with glass effect
+              const SizedBox(height: 70),
               Row(
                 children: [
                   Container(
-                    color: Colors.orange,
+                    decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     width: 100,
                     height: 200,
                     child: Padding(
@@ -253,15 +267,21 @@ class _HomeState extends State<Home> {
                       child: Column(
                         children: [
                           Icon(Icons.run_circle_outlined, size: 80,),
-                          Text('Running'),
+                          Text('Running',),
+                          SizedBox(height: 6,),
+                          Text('%',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),),
 
                         ],
                       ),
                     ),
                   ),
                   SizedBox(width: 20),
+
                   Container(
-                    color: Colors.orange,
+                    decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     width: 100,
                     height: 200,
                     child: Padding(
@@ -270,6 +290,8 @@ class _HomeState extends State<Home> {
                         children: [
                           Icon(Icons.local_fire_department_rounded, size: 80,),
                           Text('Calories'),
+                          SizedBox(height: 6,),
+                          Text('%',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold,),),
 
                         ],
                       ),
@@ -287,15 +309,17 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
                         children: [
-                          Icon(Icons.monitor_heart, size: 80,color: Colors.white70,),
-                          Text('Heart rate',style: TextStyle(color: Colors.white),),
-
+                          Icon(Icons.monitor_heart, size: 80,),
+                          Text('Heart rate',),
+                          SizedBox(height: 6,),
+                          Text('%',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),),
                         ],
                       ),
                     ),
                   ),
                 ],
               ),
+              SizedBox(height: 20,),
             ],
           ),
         ),
@@ -303,36 +327,4 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildHomeButton({
-    required String title,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 70,
-        decoration: BoxDecoration(
-          color: Colors.blueGrey.withOpacity(0.15),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white30),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: Colors.white, size: 30),
-            const SizedBox(width: 15),
-            Text(
-              title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

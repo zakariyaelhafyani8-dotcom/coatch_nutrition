@@ -1,129 +1,90 @@
 import 'dart:ui';
-
+import 'package:coach_nutrition/MyWorkout/MyPlanPage.dart';
+import 'package:coach_nutrition/Workout/MyPlanWorkout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:coach_nutrition/MyWorkout/MyPlan.dart';
 
-class ShouldersPage extends StatefulWidget {
-  @override
-  State<ShouldersPage> createState() => _ShouldersPageState();
-}
-
-class _ShouldersPageState extends State<ShouldersPage> {
-  int currentIndex = 0;
+class ShouldersPage extends StatelessWidget {
   final List<Map<String, dynamic>> exercices = [
     {
       "name": "Seated Barbell Press",
       "image": "assets/images/Barbell-Shoulder-Press.gif",
       "description":
-          "The seated barbell shoulder press is a compound exercise that targets the muscles of the shoulders, triceps, and upper body. It involves pressing a barbell overhead while seated on a bench or chair. As a fundamental movement, it is frequently used in strength, power, and hypertrophy training",
+          "The seated barbell shoulder press is a compound exercise targeting the shoulders, triceps, and upper body.",
     },
     {
       "name": "Cable Lateral Raise",
       "image": "assets/images/Cable-Lateral-Raise.gif",
       "description":
-          "The dumbbell push press is a strength training exercise that targets the shoulders, triceps, and upper body, while also engaging the core and lower body for stability and support. It’s commonly used in athletic training, CrossFit, and general strength routines to develop shoulder strength and explosiveness.",
+          "Targets the lateral deltoids using controlled cable resistance. Great for shoulder width.",
     },
     {
       "name": "Lever Shoulder Press",
       "image": "assets/images/Lever-Shoulder-Press.gif",
       "description":
-          "The standing dumbbell shoulder press, also known as the “Dumbbell Overhead Press” or simply the “Shoulder Press,” is a strength training exercise that targets the muscles of the shoulder, primarily the deltoids. In this exercise, you lift a weight (usually dumbbells or a barbell) overhead while standing. It is an effective compound exercise that also engages other upper body muscles, including the triceps and upper chest.",
+          "Machine press focusing on deltoid strength with stable guided movement.",
     },
     {
       "name": "Dumbbell Lateral Raise",
       "image": "assets/images/Dumbbell-Lateral-Raise.gif",
       "description":
-          "The dumbbell lateral raise is a strength exercise where you lift dumbbells out to the sides until your arms are parallel to the floor. It mainly targets the side deltoids, with support from the trapezius and upper back muscles. Popular in bodybuilding and rehab routines, it helps build round shoulders and improves shoulder stability.",
+          "Builds round shoulders by targeting the side delts. Essential bodybuilding exercise.",
     },
     {
-      "name": "Dumbbell Shoulder Press",
+      "name": "Dumbbell Press",
       "image": "assets/images/Dumbbell-Shoulder-Press.gif",
       "description":
-          "The dumbbell shoulder press is a compound pushing exercise performed seated or standing with a dumbbell in each hand. It focuses on pressing the weights overhead by extending the elbows and elevating the arms in the scapular plane. This movement challenges the deltoid muscles to generate force while the stabilizers of the upper back and core maintain alignment and control. Its versatility makes it effective for muscle growth, general strength, or athletic development.",
+          "Overhead dumbbell press that strengthens front delts and triceps. Can be done seated or standing.",
     },
     {
       "name": "Rear Delt Fly Machine",
       "image": "assets/images/Rear-Delt-Machine-Flys.gif",
       "description":
-          "Starting Position: Adjust the seat so that the handles are about shoulder level, and make sure to maintain good neck and lower back posture."
-          "Form: Exhale and pull your arms apart until your shoulders are parallel with your body. Hold for a brief second and then slowly return to the starting position."
-          "Personal Trainer Tips: You don’t have to pull your arms as far back as possible during this exercise. Use a comfortable range of motion, and don’t force your shoulder too far past parallel with your body."
-          "As with every exercise posture is very important, make sure that your keep your head in good alignment and don’t let your head move forwards."
-          "Also make sure that you do not cheat by using your lower back to pull the weights backwards. If you feel muscle work in your lower back, that could be a sign that the weight you are using is too heavy and you are likely compensating by using your lower back muscles.",
+          "Isolation exercise for rear delts and upper back to fix posture and shoulder balance.",
     },
     {
       "name": "Cable Row Rope",
       "image": "assets/images/Half-Kneeling-High-Cable-Row-Rope.gif",
       "description":
-          "Half kneeling high cable row is a tremendous exercise that effectively works many muscles, including the shoulder, back, wing and trapezius muscles. It also activates the trapezius muscles, and may benefit discomfort caused by muscle weakness such as postural posture and shoulder blade protrusion by affecting the infraspinatus and subscapula muscles that cover the scapula. In addition, face pull is one of the most effective corrective exercises that help compensate for poor posture and shoulder dysfunction."
-          "Many of the movements that work the same muscle group may look alike, but they focus on different parts of the muscles because they are at different angles. If you want to build better muscle specifically, keep in mind that it is more beneficial to include exercises that focus on different aspects to your training program.",
+          "Posture correction exercise targeting rear delts, rhomboids, and mid traps.",
     },
   ];
 
   @override
   Widget build(BuildContext context) {
+    final myPlanProvider = Provider.of<MyPlanProvider>(context);
+    List<Map<String, dynamic>> myPlan = [];
+
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
-            ),
-            boxShadow: [
-              BoxShadow(color: Colors.black, blurRadius: 10, spreadRadius: 1),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25),
-              bottomRight: Radius.circular(25),
-            ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-              child: AppBar(
-                elevation: 0,
-                title: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Text(
-                    "Shoulders",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                centerTitle: true,
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.grey, Colors.black12],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.orangeAccent,
+        icon: Icon(Icons.list, color: Colors.white),
+        label: Text('My Plan'),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => MyPlanWorkout()),
+          );
+        },
       ),
+
+      appBar: AppBar(
+        title: Text("Shoulders",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+        centerTitle: true,
+        backgroundColor: Color(0xFF050B38),
+      ),
+
       body: Container(
+        color: Color(0xFF050B38),
         child: GridView.builder(
           padding: EdgeInsets.all(20),
+          itemCount: exercices.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1, // 2 items per row
+            crossAxisCount: 1,
             mainAxisSpacing: 16,
-            crossAxisSpacing: 16,
             childAspectRatio: 4,
           ),
-
-          itemCount: exercices.length,
           itemBuilder: (context, index) {
             final item = exercices[index];
 
@@ -137,6 +98,7 @@ class _ShouldersPageState extends State<ShouldersPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Image.asset(item["image"], height: 80, width: 80),
+
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -144,81 +106,111 @@ class _ShouldersPageState extends State<ShouldersPage> {
                         item["name"],
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
                           fontSize: 15,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(height: 8),
                       Text(
-                        "4 Sets * 8reps",
+                        "4 Sets × 8 Reps",
                         style: TextStyle(color: Colors.grey),
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) {
-                                  return DraggableScrollableSheet(
-                                    expand: false,
-                                    builder: (context, controller) {
-                                      return Container(
-                                        padding: EdgeInsets.all(20),
-                                        child: ListView(
-                                          controller: controller,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  item["name"],
-                                                  style: TextStyle(
-                                                    fontSize: 22,
-                                                  ),
-                                                ),
-                                                IconButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
-                                                  icon: Icon(Icons.close),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 20),
-                                            Image.asset(item["image"]),
-                                            Text(
-                                              'Overview',
-                                              style: TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Text(
-                                              item["description"],
-                                              style: TextStyle(fontSize: 16),
-                                            ),
-                                          ],
+
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.white,
+                            builder: (_) => DraggableScrollableSheet(
+                              expand: false,
+                              builder: (_, controller) => Padding(
+                                padding: EdgeInsets.all(20),
+                                child: ListView(
+                                  controller: controller,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          item["name"],
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            });
-                          },
-                          icon: Icon(Icons.login),
+                                        IconButton(
+                                          onPressed: () => Navigator.pop(context),
+                                          icon: Icon(Icons.close),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 20),
+                                    Image.asset(item["image"], height: 200),
+                                    SizedBox(height: 20),
+                                    Text(
+                                      "Overview",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      item["description"],
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 20),
+
+                                    ElevatedButton.icon(
+                                      icon: Icon(Icons.add),
+                                      label: Text("Add to My Plan"),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.orangeAccent,
+                                        foregroundColor: Colors.white,
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 14,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        myPlanProvider.addExercise(item);
+                                        Navigator.pop(context);
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              "${item["name"]} Added to Plan",
+                                            ),
+                                            duration: Duration(seconds: 2),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orangeAccent,
                         ),
-                      ],
-                    ),
+                        icon: Icon(Icons.info, color: Colors.white, size: 18),
+                        label: Text(
+                          "Info",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

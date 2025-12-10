@@ -1,242 +1,180 @@
 import 'dart:ui';
-
+import 'package:coach_nutrition/MyWorkout/MyPlanPage.dart';
+import 'package:coach_nutrition/Workout/MyPlanWorkout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:coach_nutrition/MyWorkout/MyPlan.dart';
 
-class FullBodyPage extends StatefulWidget {
-  @override
-  State<FullBodyPage> createState() => _FullBodyPageState();
-}
-
-class _FullBodyPageState extends State<FullBodyPage> {
-  int currentIndex = 0;
+class FullBodyPage extends StatelessWidget {
   final List<Map<String, dynamic>> foods = [
     {
       "name": "Burpee Long Jump",
       "image": "assets/images/Burpee-Long-Jump.gif",
-      "description":
-          "The Burpee Long Jump is an advanced, full-body plyometric conditioning exercise that combines the explosive power of a burpee with the athleticism of a broad jump. It challenges the entire body—building muscular endurance, cardiovascular stamina, and explosive power simultaneously. This movement is often used in high-intensity interval training (HIIT), CrossFit workouts, athletic conditioning, and military-style workouts.",
+      "description": "Full-body plyometric exercise combining burpee and broad jump..."
     },
     {
       "name": "Plate Push",
       "image": "assets/images/plate-push.gif",
-      "description":
-          "The Plate Push is a high-intensity, full-body exercise that mimics the sled push but uses a weight plate on a smooth surface instead of a sled. This movement helps increase explosive hip extension, strength, speed, conditioning, and functional strength. It’s commonly used in sports performance, CrossFit, and metabolic training to improve leg drive, power output, and cardiovascular endurance.",
+      "description": "High-intensity full-body exercise using a weight plate..."
     },
     {
       "name": "Body Saw Plank",
       "image": "assets/images/body-saw-plank.gif",
-      "description":
-          "The body saw plank is a dynamic core exercise performed from a forearm plank position. Instead of holding still, you shift your body forward and backward, like a sawing motion. This exercise strengthens the entire core, including deep stabilizers, and demands greater control than the traditional plank. It’s often used in athletic and functional training to improve posture, anti-extension strength, and shoulder stability.",
+      "description": "Dynamic plank that strengthens entire core..."
     },
     {
       "name": "Clean and Jerk",
       "image": "assets/images/clean-and-jerk.gif",
-      "description":
-          "The clean and jerk is one of the two main lifts in Olympic weightlifting competitions. It is a highly technical, full-body exercise that trains explosive power, coordination, balance, and strength. The lift consists of two phases: the clean, where the barbell is lifted from the ground to the shoulders, and the jerk, where it is driven overhead. The clean recruits the posterior chain for a powerful pull and hip extension, while the jerk emphasizes upper-body strength and speed for the overhead drive. Mastering this movement requires mobility, timing, and progressive training.",
+      "description": "Olympic lift targeting explosive power, coordination, and strength..."
     },
     {
       "name": "Dumbbell Push Press",
       "image": "assets/images/Dumbbell-Push-Press.gif",
-      "description":
-          "The dumbbell push press is a strength training exercise that targets the shoulders, triceps, and upper body, while also engaging the core and lower body for stability and support. It’s commonly used in athletic training, CrossFit, and general strength routines to develop shoulder strength and explosiveness.",
-    },
-    {
-      "name": "Zercher Carry",
-      "image": "assets/images/zercher-carry.gif",
-      "description":
-          "The Zercher carry involves walking while holding a barbell or heavy object in front of the torso, supported in the crease of the elbows. Unlike traditional carries that engage the grip directly, the Zercher position shifts the load forward, forcing the core and upper back to work harder to maintain upright posture and balance. It’s a demanding but highly effective total-body movement. It’s often used in strongman, powerlifting, and functional fitness to build real-world strength and resilience.",
-    },
-    {
-      "name": "Dumbbell Power Clean",
-      "image": "assets/images/Dumbbell-Power-Clean.gif",
-      "description":
-          "",
-    },
-    {
-      "name": "Log Lift",
-      "image": "assets/images/Log-Lift.gif",
-      "description":
-          "Stand with your feet shoulder-width apart and place your hands on the log or barbell, keeping your grip shoulder-width apart."
-          "Keep your back straight, bend at the knees, and pick up the log, bringing it to your waist."
-          "With the log resting on your waist, take a deep breath, tighten your core, and use your legs to push upward, lifting the log to your shoulder."
-          "Once the log is on your shoulder, maintain a firm grip, keeping your elbow close to your side, and stand upright."
-          "Pause for a few seconds and then lower the log back to your waist, keeping control of the weight throughout the movement.",
-    },
-    {
-      "name": "Barbell Snatch",
-      "image": "assets/images/Barbell-Snatch.gif",
-      "description":
-      "",
+      "description": "Strength exercise targeting shoulders, triceps, and core..."
     },
   ];
 
   @override
   Widget build(BuildContext context) {
+    final myPlanProvider = Provider.of<MyPlanProvider>(context);
+
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: Container(
+      backgroundColor: Color(0xFF050B38),
+
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.orangeAccent,
+        icon: Icon(Icons.list),
+        label: Text("My Plan"),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MyPlanWorkout(),
+            ),
+          );
+        },
+      ),
+
+      appBar: AppBar(
+        backgroundColor: Color(0xFF050B38),
+        elevation: 0,
+        centerTitle: true,
+        title: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
-            ),
-            boxShadow: [
-              BoxShadow(color: Colors.black, blurRadius: 10, spreadRadius: 1),
-            ],
+            color: Colors.white.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(30),
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(25),
-              bottomRight: Radius.circular(25),
-            ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-              child: AppBar(
-                elevation: 0,
-                title: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Text(
-                    "Full Body",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                centerTitle: true,
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.grey, Colors.black12],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          child: Text(
+            "Full Body",
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
       ),
-      body: Container(
-        child: GridView.builder(
-          padding: EdgeInsets.all(20),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1, // 2 items per row
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 16,
-            childAspectRatio: 4,
-          ),
 
-          itemCount: foods.length,
-          itemBuilder: (context, index) {
-            final item = foods[index];
+      body: GridView.builder(
+        padding: EdgeInsets.all(20),
+        itemCount: foods.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          mainAxisSpacing: 16,
+          childAspectRatio: 4,
+        ),
+        itemBuilder: (context, index) {
+          final item = foods[index];
 
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [BoxShadow(color: Colors.black54, blurRadius: 10)],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Image.asset(item["image"], height: 80, width: 80),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        item["name"],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                          fontSize: 15,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        "4 Sets * 8reps",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [BoxShadow(color: Colors.orangeAccent, blurRadius: 6)],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Image.asset(item["image"], height: 80, width: 80),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(item["name"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                    SizedBox(height: 4),
+                    Text("4 Sets × 8 Reps", style: TextStyle(color: Colors.grey)),
+                  ],
+                ),
+
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orangeAccent,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) {
-                                  return DraggableScrollableSheet(
-                                    expand: false,
-                                    builder: (context, controller) {
-                                      return Container(
-                                        padding: EdgeInsets.all(20),
-                                        child: ListView(
-                                          controller: controller,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  item["name"],
-                                                  style: TextStyle(
-                                                    fontSize: 22,
-                                                  ),
-                                                ),
-                                                IconButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
-                                                  icon: Icon(Icons.close),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 20),
-                                            Image.asset(item["image"]),
-                                            Text(
-                                              'Overview',
-                                              style: TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Text(
-                                              item["description"],
-                                              style: TextStyle(fontSize: 16),
-                                            ),
-                                          ],
+                  icon: Icon(Icons.info, color: Colors.white, size: 18),
+                  label: Text("Info", style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (_) {
+                        return DraggableScrollableSheet(
+                          expand: false,
+                          builder: (_, controller) {
+                            return Container(
+                              padding: EdgeInsets.all(20),
+                              child: ListView(
+                                controller: controller,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(item["name"], style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                                      IconButton(
+                                        icon: Icon(Icons.close),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 20),
+                                  Image.asset(item["image"], height: 200),
+                                  SizedBox(height: 20),
+                                  Text("Overview", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                                  SizedBox(height: 8),
+                                  Text(item["description"], style: TextStyle(fontSize: 16)),
+                                  SizedBox(height: 20),
+
+                                  ElevatedButton.icon(
+                                    icon: Icon(Icons.add),
+                                    label: Text("Add to My Plan"),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.orangeAccent,
+                                      foregroundColor: Colors.white,
+                                      padding: EdgeInsets.symmetric(vertical: 14),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                    ),
+                                    onPressed: () {
+                                      myPlanProvider.addExercise(item);
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text("${item["name"]} added to My Plan"),
+                                          duration: Duration(seconds: 2),
                                         ),
                                       );
                                     },
-                                  );
-                                },
-                              );
-                            });
+                                  ),
+                                ],
+                              ),
+                            );
                           },
-                          icon: Icon(Icons.open_in_new_sharp),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 }
+
+// ⭐ My Plan Page (Provider-based)

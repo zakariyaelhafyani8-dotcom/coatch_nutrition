@@ -14,12 +14,6 @@ class workoutHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/backgroundApp.png"),
-          fit: BoxFit.cover, // fill the screen
-        ),
-      ),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: SingleChildScrollView(
